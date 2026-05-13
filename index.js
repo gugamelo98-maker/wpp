@@ -4,30 +4,51 @@ const app = express();
 
 app.get('/', (req, res) => {
 
+  const numero = '5548996077545';
+
   const mensagem = encodeURIComponent(
    'Olá gostaria de mais informações sobre o CRÉDITO DO TRABALHADOR'
   );
 
-  const userAgent = req.headers['user-agent'] || '';
+  const ua = req.headers['user-agent'] || '';
 
   let url;
 
-  if (/Android/i.test(userAgent)) {
+  // iPhone
+  if (/iPhone|iPad|iOS/i.test(ua)) {
 
     url =
-    `intent://send?phone=5548996077545&text=${mensagem}#Intent;scheme=smsto;package=com.whatsapp;end`;
-
-  } else {
-
-    url =
-    `https://wa.me/5548996077545?text=${mensagem}`;
+    `https://wa.me/${numero}?text=${mensagem}`;
 
   }
 
-  res.redirect(302, url);
+  // Android
+  else if (/Android/i.test(ua)) {
+
+    url =
+    `intent://send?phone=${numero}&text=${mensagem}#Intent;scheme=smsto;package=com.whatsapp;end`;
+
+  }
+
+  // Desktop
+  else {
+
+    url =
+    `https://api.whatsapp.com/send?phone=${numero}&text=${mensagem}`;
+
+  }
+
+  res.writeHead(302, {
+    'Location': url,
+    'Cache-Control': 'no-cache'
+  });
+
+  res.end();
 
 });
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log('Servidor iniciado');
+});
