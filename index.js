@@ -1,26 +1,18 @@
-const express = require('express');
-
-const app = express();
-
-app.get('/', (req, res) => {
-
-  res.send(`
-    <html>
-      <head>
-        <meta http-equiv="refresh"
-        content="0; url=https://api.whatsapp.com/send?phone=5548996077545&text=Olá%20gostaria%20de%20mais%20informações%20sobre%20o%20CRÉDITO%20DO%20TRABALHADOR">
-      </head>
-
-      <body>
-        Redirecionando...
-      </body>
-    </html>
-  `);
-
+const http = require('http');
+ 
+const PHONE = '5548996077545';
+const MESSAGE = encodeURIComponent('Olá! Vim pelo anúncio e gostaria de mais informações.');
+ 
+const server = http.createServer((req, res) => {
+  res.writeHead(301, {
+    'Location': `https://wa.me/${PHONE}?text=${MESSAGE}`,
+    'Cache-Control': 'no-cache'
+  });
+  res.end();
 });
-
+ 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log('Servidor rodando');
+server.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+ 
