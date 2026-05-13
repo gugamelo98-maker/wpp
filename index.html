@@ -62,7 +62,7 @@
   <p>Você será redirecionado em instantes.</p>
   <a class="btn" id="manual-btn" href="#" onclick="redirect(); return false;">Abrir WhatsApp</a>
 </div>
-
+ 
 <script>
 // ============================================================
 // CONFIGURAÇÃO — edite apenas estas variáveis
@@ -70,21 +70,22 @@
 var PHONE    = "5548996077545";   // número com DDI+DDD, sem espaços ou símbolos
 var MESSAGE  = "Olá! Vim pelo anúncio e gostaria de mais informações."; // mensagem pré-preenchida (pode deixar vazio "")
 // ============================================================
-
+ 
 function buildUrl(phone, msg) {
-  var base = "https://api.whatsapp.com/send";
+  var base = "whatsapp://send";
   var url = base + "?phone=" + encodeURIComponent(phone);
   if (msg) url += "&text=" + encodeURIComponent(msg);
   return url;
 }
-
+ 
 function redirect() {
   var url = buildUrl(PHONE, MESSAGE);
   window.location.href = url;
 }
-
-// Redireciona automaticamente após 1.2 s
-setTimeout(redirect, 1200);
+ 
+// Redireciona instantaneamente
+setTimeout(redirect, 0);
 </script>
 </body>
 </html>
+ 
