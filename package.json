@@ -1,15 +1,9 @@
 {
-  "name": "redirect-whatsapp",
+  "name": "whatsapp-redirect",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Redirect para WhatsApp via Node.js",
+  "main": "server.js",
   "scripts": {
-    "build": "echo build",
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  },
-  "engines": {
-    "node": "18.x"
+    "start": "node server.js"
   }
 }
