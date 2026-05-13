@@ -4,14 +4,25 @@ const app = express();
 
 app.get('/', (req, res) => {
 
-  const numero = '5548996077545';
-
   const mensagem = encodeURIComponent(
-    'Olá gostaria de mais informações sobre o CRÉDITO DO TRABALHADOR'
+   'Olá gostaria de mais informações sobre o CRÉDITO DO TRABALHADOR'
   );
 
-  const url =
-   `https://api.whatsapp.com/send?phone=${numero}&text=${mensagem}`;
+  const userAgent = req.headers['user-agent'] || '';
+
+  let url;
+
+  if (/Android/i.test(userAgent)) {
+
+    url =
+    `intent://send?phone=5548996077545&text=${mensagem}#Intent;scheme=smsto;package=com.whatsapp;end`;
+
+  } else {
+
+    url =
+    `https://wa.me/5548996077545?text=${mensagem}`;
+
+  }
 
   res.redirect(302, url);
 
@@ -19,6 +30,4 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log('Servidor rodando');
-});
+app.listen(PORT);
