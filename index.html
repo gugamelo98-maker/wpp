@@ -1,9 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>window.location.replace("https://api.whatsapp.com/send?phone=5548996077545&text=Ol%C3%A1!%20Vim%20pelo%20an%C3%BAncio%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es.");</script>
-</head>
-<body></body>
-</html>
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req, res) => {
+
+  const numero = '5548996077545';
+
+  const mensagem = encodeURIComponent(
+    'Olá gostaria de mais informações sobre o CRÉDITO DO TRABALHADOR'
+  );
+
+  const url =
+   `https://api.whatsapp.com/send?phone=${numero}&text=${mensagem}`;
+
+  res.redirect(302, url);
+
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log('Servidor rodando');
+});
